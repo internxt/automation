@@ -87,15 +87,14 @@ jobs:
         run: |
           git config --global user.email "$GITHUB_EMAIL"
           git config --global user.name "$GITHUB_USERNAME"
+          git clone https://$REPOSITORY
+          cd $FOLDER
           jq '.version = "${{ steps.increment_version.outputs.next_version }}"' package.json > package2.json
           rm package.json
           mv package2.json package.json
           git add package.json
           git commit -m "[skip ci] Bump version ${{ steps.increment_version.outputs.next_version }}"
-          echo "$GITHUB_USERNAME"
-          echo "$GITHUB_TOKEN"
-          echo "$REPOSITORY"
-          git push https://${{ env.GITHUB_USERNAME }}:${{env.GITHUB_TOKEN}}@${{env.REPOSITORY}}
+          git push https://$GITHUB_USERNAME:${{env.GITHUB_TOKEN}}@$REPOSITORY
           
   releaseandnotify:
     name: Release
