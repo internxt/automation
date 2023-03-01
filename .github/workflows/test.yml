@@ -1,0 +1,18 @@
+name: Test
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+env:
+  BRANCH: ${{ inputs.branch }}
+jobs:
+  change-package-json-and-release:
+    name: Check Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - run: echo ${{ env.branch } 
