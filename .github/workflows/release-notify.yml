@@ -85,6 +85,7 @@ jobs:
           
       - name: Commit updated package.json
         run: |
+          jq '.version = "${{ steps.increment_version.outputs.next_version }}"' package.json > package2.json
           git config --global user.email "$GITHUB_EMAIL"
           git config --global user.name "$GITHUB_USERNAME"
           git clone https://$REPOSITORY
