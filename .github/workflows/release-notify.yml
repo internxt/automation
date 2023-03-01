@@ -93,9 +93,8 @@ jobs:
           jq '.version = "${{ steps.increment_version.outputs.next_version }}"' package.json > package2.json
           rm package.json
           mv package2.json package.json
-          git add package.json
-          git commit -m "[skip ci] Bump version ${{ steps.increment_version.outputs.next_version }}"
-          
+
+
   releaseandnotify:
     name: Release
     runs-on: ubuntu-latest
