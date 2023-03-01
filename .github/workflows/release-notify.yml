@@ -95,7 +95,6 @@ jobs:
           mv package2.json package.json
           git add package.json
           git commit -m "[skip ci] Bump version ${{ steps.increment_version.outputs.next_version }}"
-          #git push https://$GITHUB_USERNAME:${{env.GITHUB_TOKEN}}@$REPOSITORY
           
   releaseandnotify:
     name: Release
