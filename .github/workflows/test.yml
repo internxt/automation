@@ -15,4 +15,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - run: echo ${{ env.BRANCH } 
+      - run: echo "${{ env.BRANCH }" 
