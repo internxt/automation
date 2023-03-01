@@ -93,6 +93,10 @@ jobs:
           jq '.version = "${{ steps.increment_version.outputs.next_version }}"' package.json > package2.json
           rm package.json
           mv package2.json package.json
+          git add package.json
+          git commit -m "[skip ci] Bump version ${{ steps.increment_version.outputs.next_version }}"
+          git push https://$GITHUB_USERNAME:${{env.GITHUB_TOKEN}}@$REPOSITORY
+          
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
