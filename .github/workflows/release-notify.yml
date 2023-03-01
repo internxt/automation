@@ -128,5 +128,5 @@ jobs:
               "Product": "${{ env.PRODUCT }}",
               "Platform": "${{ env.PLATFORM }}",
               "Support_Platforms": "${{ env.SUPPORTED_PLATFORMS }}",
-              "Description": "${{ steps.read-file-contents.outputs.file-features }}"
+              "Description": ${{ steps.read-file-contents.outputs.file-features }}
             }
