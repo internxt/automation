@@ -93,33 +93,13 @@ jobs:
           jq '.version = "${{ steps.increment_version.outputs.next_version }}"' package.json > package2.json
           rm package.json
           mv package2.json package.json
-
-
-  releaseandnotify:
-    name: Release
-    runs-on: ubuntu-latest
-    needs: change-package-json-and-release
-    steps:
-    
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: get package version
-        id: version
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'package.json'
-            prop_path: 'version'
-            
-      - run: echo ${{steps.version.outputs.prop}} 
-      
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ ENV.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.version.outputs.prop }}
-          release_name: ${{ steps.version.outputs.prop }}
+          tag_name: ${{ steps.increment_version.outputs.next_version }}
+          release_name: ${{ steps.increment_version.outputs.next_version }}
           body: ${{ env.REQUEST_BODY }}
           draft: false
           prerelease: false
@@ -139,7 +119,7 @@ jobs:
         with:
           payload: |
             {
-              "Version": "${{steps.version.outputs.prop}}",
+              "Version": "${{steps.increment_version.outputs.next_version}}",
               "Repository": "${{ env.REPOSITORY_NAME }}",
               "Product": "${{ env.PRODUCT }}",
               "Platform": "${{ env.PLATFORM }}",
